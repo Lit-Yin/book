@@ -179,7 +179,7 @@ export default Ember.Route.extend({
 {{!-- app/templates/users/index --}}
 
 {{!-- 在开头添加 --}}
-{{#link-to 'user.new'}}新增用户{{/link-to}}
+{{#link-to 'users.new'}}新增用户{{/link-to}}
 ```
 
 创建一个新增用户的路由：
@@ -360,7 +360,11 @@ npm install --save body-parser
 // server/index.js
 
 var bodParser = require('body-parser');
-app.user(bodyParser());
+//app.user(bodyParser());--这种写法对新版本的Express已过时
+// parse application/x-www-form-urlencoded  
+app.use(bodyParser.urlencoded({ extended: false }))  
+// parse application/json  
+app.use(bodyParser.json()) 
 ```
 
 接下来在doSave()添加保存成功后跳转：
@@ -664,7 +668,7 @@ export default Ember.Controller.extend({
 点击保存按钮，出错了，没有找到doSave()方法，因为还没有控制器：
 
 ```sh
-ember g controller users/user/edit.js
+ember g controller users/user/edit
 ```
 
 添加保存action：
